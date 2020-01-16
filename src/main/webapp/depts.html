@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				var tab = $("#tab");
+				tab.find("tr:gt(0)").remove();
+				$.get("dept/list",function(data){
+					for(i=0;i<data.length;i++){
+						var o = data[i];
+						var tr = $("<tr></tr>");
+						var td1 = $("<td>"+o.id+"</td>");
+						var td2 = $("<td>"+o.name+"</td>");
+						tr.append(td1);
+						tr.append(td2);
+						tab.append(tr);
+					}	
+				})
+				
+				$("#btn_save").click(function(){
+					var v = $("#dn").val();
+					$.post('dept/save',{name:v},function(data){
+						console.log(data)
+					})
+				})
+				
+			})		
+		</script>
+	</head>
+	<body>
+		<p>
+			<label>部门名称：</label><input id="dn" type="text">
+			<button id="btn_save">保存</button>
+		</p>
+		<table id="tab" border="1" width="80%" align="center">
+			<tr>
+				<td>编号</td><td>部门名称</td>
+			</tr>
+		</table>
+	</body>
+</html>
